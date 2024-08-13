@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .gallary {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .gallary img, .gallary video {
+            width: 300px;
+            height: 200px;
+            padding: 5px;
+            transition: all 0.5s;
+        }
+
+        .gallary img:hover, .gallary video:hover {
+            box-shadow: 0px 0px 10px grey;
+            transform: scale(1.1);
+        }
+
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 10;
+            background-color: rgba(55, 53, 53, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .popup img, .popup video {
+            position: absolute;
+            transition: transform 0.5s ease-in-out, top 0.5s, left 0.5s, width 0.5s, height 0.5s;
+        }
+
+        span.cross {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gallary">
+        <div class="pic"><img src="naturepics/img1.jpg"></div>
+        <div class="pic"><img src="naturepics/img2.jpg"></div>
+        <div class="pic"><img src="naturepics/img3.jpg"></div>
+        <div class="pic"><img src="naturepics/img4.jpg"></div>
+        <div class="pic"><img src="naturepics/img5.jpg"></div>
+        <div class="pic"><img src="naturepics/img6.jpg"></div>
+        <div class="pic"><img src="naturepics/img7.jpg"></div>
+        <div class="pic"><img src="naturepics/img8.jpg"></div>
+        <div class="pic"><video src="Videos/WhatsApp Video 2024-07-26 at 2.07.38 PM.mp4" controls></video></div>
+        <div class="pic"><img src="naturepics/img10.jpg"></div>
+       
+    </div>
+
+    <div class="popup">
+        <span class="cross">&times;</span>
+        <img class="bigimg" src="naturepics/img1.jpg">
+        <video class="bigvideo" controls style="display: none;"></video>
+    </div>
+
+    <script>
+        const pop = document.querySelector('.popup');
+        const popimg = document.querySelector('.bigimg');
+        const popvideo = document.querySelector('.bigvideo');
+        const images = document.querySelectorAll('.pic img');
+        const videos = document.querySelectorAll('.pic video');
+        const closeBtn = document.querySelector('.popup .cross');
+
+        images.forEach((element) => {
+            element.onclick = (ele) => {
+                const rect = ele.target.getBoundingClientRect();
+
+                popimg.style.display = 'block';
+                popvideo.style.display = 'none';
+
+                popimg.src = ele.target.getAttribute('src');
+                
+               
+                popimg.style.top = rect.top + 'px';
+                popimg.style.left = rect.left + 'px';
+                popimg.style.width = rect.width + 'px';
+                popimg.style.height = rect.height + 'px';
+
+                pop.style.display = 'block';
+
+              
+                setTimeout(() => {
+                    popimg.style.transform = 'scale(3)'; // Adjust scale as needed
+                    popimg.style.top = '50%';
+                    popimg.style.left = '50%';
+                    popimg.style.width = '90%';
+                    popimg.style.height = 'auto';
+                    popimg.style.transform = 'translate(-50%, -50%)';
+                }, 10);
+            };
+        });
+
+        videos.forEach((element) => {
+            element.onclick = (ele) => {
+                const rect = ele.target.getBoundingClientRect();
+
+                popimg.style.display = 'none';
+                popvideo.style.display = 'block';
+
+                popvideo.src = ele.target.getAttribute('src');
+                
+                popvideo.style.top = rect.top + 'px';
+                popvideo.style.left = rect.left + 'px';
+                popvideo.style.width = rect.width + 'px';
+                popvideo.style.height = rect.height + 'px';
+
+                pop.style.display = 'block';
+
+                // Expand the video to full size
+                setTimeout(() => {
+                    popvideo.style.transform = 'scale(3)';
+                    popvideo.style.top = '50%';
+                    popvideo.style.left = '50%';
+                    popvideo.style.width = '90%';
+                    popvideo.style.height = 'auto';
+                    popvideo.style.transform = 'translate(-50%, -50%)';
+                }, 10);
+            };
+        });
+
+        closeBtn.onclick = () => {
+            pop.style.display = 'none';
+        };
+    </script>
+    
+</body>
+</html>
+
